@@ -14,6 +14,11 @@ set novisualbell
 set noerrorbells
 
 """"""""""""""""""""""""""""""""""
+" Code Standard stuff            "
+""""""""""""""""""""""""""""""""""
+set ffs=dos
+
+""""""""""""""""""""""""""""""""""
 " Key Remap - Input Changes      "
 """"""""""""""""""""""""""""""""""
 "tabs
@@ -49,19 +54,25 @@ endif
 """"""""""""""""""""""""""""""""""
 " Visual                         "
 """"""""""""""""""""""""""""""""""
-"change font                     "
-set guifont=Consolas:h11
-"search highlighted              "
-set hlsearch
-"relative line number            "
-set relativenumber
-"syntax highlighting             "
+" Dracula bwaaaahh
+if v:version < 802
+    packadd! dracula
+endif
 syntax enable
-"custom color scheme             "
-colorscheme wombat256mod
-"terminal window default title   "
-set title
-set titlestring=LOOKING-GLASS titlelen=70
+colorscheme dracula
+""change font                     "
+"set guifont=Consolas:h11
+""search highlighted              "
+set hlsearch
+""relative line number            "
+set relativenumber
+""syntax highlighting             "
+syntax enable
+""custom color scheme             "
+"colorscheme wombat256mod
+""terminal window default title   "
+"set title
+"set titlestring=LOOKING-GLASS titlelen=70
 
 "Color Column at width
 "   Don't like because visual splits...
