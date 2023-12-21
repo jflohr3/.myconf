@@ -1,6 +1,11 @@
 """"""""""""""""""""""""""""""""""
 " James Flohr       Medtronic    "
 """"""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""
+" New Stuff Tryouts              "
+""""""""""""""""""""""""""""""""""
+" netrw directory viewer opens in new vert buffer
+let g:netrw_browse_split=2
 
 """"""""""""""""""""""""""""""""""
 " Internals                      "
@@ -16,13 +21,13 @@ set noerrorbells
 """"""""""""""""""""""""""""""""""
 " Code Standard stuff            "
 """"""""""""""""""""""""""""""""""
-set ffs=dos
+"set ffs=dos
 
 """"""""""""""""""""""""""""""""""
 " Key Remap - Input Changes      "
 """"""""""""""""""""""""""""""""""
 "tabs
-set tabstop=3
+set tabstop=2
 set expandtab
 " automatical - Charles Barkley
 set autoindent
@@ -31,6 +36,15 @@ set autoindent
 "OP backspace
 set backspace=indent,eol,start
 set gdefault
+" Highlight don't move to next search hit
+nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+
+" keep cursor position over buffer switches
+augroup CursorPosition
+  autocmd!
+  autocmd BufLeave * let b:winview = winsaveview()
+  autocmd BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+augroup END
 
 "no shift key in normal mode
 " UPDATE: well we might want to repeat motions now
@@ -85,6 +99,21 @@ syntax enable
 "vnoremap / /\v
 
 """"""""""""""""""""""""""""""""""
+" Functions                      "
+""""""""""""""""""""""""""""""""""
+function ShowFileFormatFlag(var)
+  if ( a:var == 'dos' )
+    return '[dos]'
+  elseif ( a:var == 'mac' )
+    return '[mac]'
+  elseif ( a:var == 'unix' )
+    return '[unix]'
+  else
+    return '[unknown]'
+  endif
+endfunction
+
+""""""""""""""""""""""""""""""""""
 " Status Line                    "
 """"""""""""""""""""""""""""""""""
 set laststatus=2
@@ -105,6 +134,7 @@ set statusline+=%#CursorLine#                                  " colour
 set statusline+=\ %t\                                          " short file name
 set statusline+=%=                                             " right align
 set statusline+=%#CursorLine#                                  " colour
+set statusline+=\ %{ShowFileFormatFlag(&fileformat)}\          " fileformat
 set statusline+=\ %Y\                                          " file type
 set statusline+=%#CursorIM#                                    " colour
 set statusline+=\ %3l:%-2c\                                    " line + column

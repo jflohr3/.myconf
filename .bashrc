@@ -1,6 +1,19 @@
 ################################################################
 # James Flohr
 
+################################
+# Manual Path
+# Add python 3.10 to path (I'm not reading any more of the archlinux wiki to figure out
+#                          how to request a specific version, very frustrating)
+# This doesn't work in this shell, probably because it's python for windows
+#export PATH="$PATH:/c/UserPrograms/python3.10.5"
+
+################################
+# Tmux & Bill Gate's Crap
+# Delete the old tmp socket when starting tmux
+#  ! We really should try and kill any running tmux procs
+alias tm='rm /tmp/tmux-$(id -u)/default; tmux new'
+
 ################################################################
 # Behavior
 ################################################################
@@ -9,10 +22,10 @@ set -o vi
 
 # If not running interactively, exit.
 # IE: Don't load this conf for remote stuff, corrupting transfers...
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+#case $- in
+#    *i*) ;;
+#      *) return;;
+#esac
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
@@ -45,12 +58,13 @@ HISTFILESIZE=2000
 ################################################################
 # Aliases
 ################################################################
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+alias ls='ls --color=auto'
+alias ll='ls -la'
+alias lt='ls -lta'
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+## TODO build libnotify-send from arch
+#alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 ################################################################
 
 
@@ -100,9 +114,14 @@ esac
 #  http://superuser.com/questions/650322/ignore-ntuser-dat-files-when-ls-on-git-bash
 #  Don't hide things from ls outside home dir
 # ! ls_filter.bat '/usr/bin/ls_filter.bat'
-alias ls=ls_filter.bat $*
+# alias ls=ls_filter.bat $*
+#
+# Just use MYSYS2 - UCRT64
+# Git-Bash devs are completely opposed to using it for anything
+#  but version control...
 ################################################################
 
 ################################################################
 # Cargo Cult Holdover Configs
 ################################################################
+
