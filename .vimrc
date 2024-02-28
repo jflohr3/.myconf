@@ -1,12 +1,43 @@
 """"""""""""""""""""""""""""""""""
-" James Flohr       Medtronic    "
+" James Flohr       Mxdtr0nic    "
 """"""""""""""""""""""""""""""""""
 """"""""""""""""""""""""""""""""""
-" New Stuff Tryouts              "
+" New Stuff Tryouts -            "
 """"""""""""""""""""""""""""""""""
-" netrw directory viewer opens in new vert buffer
-let g:netrw_browse_split=2
+set splitright
 
+" using vimdiff with multiple versions of file,
+"   this should keep the scroll lock of all versions of the file
+"   when I turn off the diff for some of them
+"set scrollbind  " I think its screwing up split cursor, making me scroll 
+"   the entire file when I change bufers
+"   Yes just for diff. :diffoff or :!diff should reset these options
+""""""""""""""""""""""""""""""""""
+" New Stuff Tryouts - Charles    "
+""""""""""""""""""""""""""""""""""
+"  Set the automatic load when the file is changed
+set autoread
+set cursorline              "  Highlight the current line
+"  Pixel row inserted between characters
+set linespace=1
+
+" netrw directory viewer opens in new vert buffer
+"let g:netrw_browse_split=2
+" just use smarter buffering, this is a bad sol
+
+" stupid place uses 120 line width but has tiny monitors
+" BuT ThEY ArE cOMfoRt MoNItoRs.... kill me
+set nowrap
+
+"  Highlight matching parentheses
+set showmatch
+
+" prefer vertical orientation when using :diffsplit
+set diffopt+=vertical
+" VIM auto complete for vim commands
+set wildmenu
+set wildmode=longest:full,full
+set wildoptions=pum
 """"""""""""""""""""""""""""""""""
 " Internals                      "
 """"""""""""""""""""""""""""""""""
@@ -27,11 +58,14 @@ set noerrorbells
 " Key Remap - Input Changes      "
 """"""""""""""""""""""""""""""""""
 "tabs
-set tabstop=2
+set tabstop=4
+set shiftwidth=4
+set smartindent
 set expandtab
 " automatical - Charles Barkley
-set autoindent
-"set smarttab - doesn't work in
+"set autoindent
+
+set smarttab
 "  gvim for txt files
 "OP backspace
 set backspace=indent,eol,start
@@ -40,11 +74,14 @@ set gdefault
 nnoremap * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
 
 " keep cursor position over buffer switches
-augroup CursorPosition
-  autocmd!
-  autocmd BufLeave * let b:winview = winsaveview()
-  autocmd BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
-augroup END
+" THIS SHIT IS not playing nice when I have the same file open three times man...
+" This shit moves to a search result on any buffer change, disgusting...
+" why did I ever need this? isn't this built in????
+"augroup CursorPosition
+"  autocmd!
+"  autocmd BufLeave * let b:winview = winsaveview()
+"  autocmd BufEnter * if(exists('b:winview')) | call winrestview(b:winview) | endif
+"augroup END
 
 "no shift key in normal mode
 " UPDATE: well we might want to repeat motions now
@@ -115,6 +152,29 @@ endfunction
 
 """"""""""""""""""""""""""""""""""
 " Status Line                    "
+"set statusline=
+"set statusline+=%#DiffAdd#%{(mode()=='n')?'\ \ NORMAL\ ':''}
+"set statusline+=%#DiffChange#%{(mode()=='i')?'\ \ INSERT\ ':''}
+"set statusline+=%#DiffDelete#%{(mode()=='r')?'\ \ RPLACE\ ':''}
+"set statusline+=%#Cursor#%{(mode()=='v')?'\ \ VISUAL\ ':''}
+"set statusline+=\ %n\                                          " buffer number
+"set statusline+=%#Visual#                                      " colour
+"set statusline+=%{&paste?'\ PASTE\ ':''}
+"set statusline+=%{&spell?'\ SPELL\ ':''}
+"set statusline+=%#CursorIM#                                    " colour
+"set statusline+=%R                                             " readonly flag
+"set statusline+=%M                                             " modified [+] flag
+"set statusline+=%#Cursor#                                      " colour
+"set statusline+=%#CursorLine#                                  " colour
+"set statusline+=\ %t\                                          " short file name
+"set statusline+=%=                                             " right align
+"set statusline+=%#CursorLine#                                  " colour
+"set statusline+=\ %{ShowFileFormatFlag(&fileformat)}\          " fileformat
+"set statusline+=\ %Y\                                          " file type
+"set statusline+=%#CursorIM#                                    " colour
+"set statusline+=\ %3l:%-2c\                                    " line + column
+"set statusline+=%#Cursor#                                      " colour
+"set statusline+=\ %3p%%\                                       " percentage
 """"""""""""""""""""""""""""""""""
 set laststatus=2
 set statusline=
@@ -123,20 +183,20 @@ set statusline+=%#DiffChange#%{(mode()=='i')?'\ \ INSERT\ ':''}
 set statusline+=%#DiffDelete#%{(mode()=='r')?'\ \ RPLACE\ ':''}
 set statusline+=%#Cursor#%{(mode()=='v')?'\ \ VISUAL\ ':''}
 set statusline+=\ %n\                                          " buffer number
-set statusline+=%#Visual#                                      " colour
+set statusline+=%#WildMenu#                                      " colour
 set statusline+=%{&paste?'\ PASTE\ ':''}
 set statusline+=%{&spell?'\ SPELL\ ':''}
-set statusline+=%#CursorIM#                                    " colour
+set statusline+=%#WildMenu#                                    " colour
 set statusline+=%R                                             " readonly flag
 set statusline+=%M                                             " modified [+] flag
-set statusline+=%#Cursor#                                      " colour
-set statusline+=%#CursorLine#                                  " colour
+set statusline+=%#WildMenu#                                      " colour
+set statusline+=%#WildMenu#                                  " colour
 set statusline+=\ %t\                                          " short file name
 set statusline+=%=                                             " right align
-set statusline+=%#CursorLine#                                  " colour
+set statusline+=%#WildMenu#                                  " colour
 set statusline+=\ %{ShowFileFormatFlag(&fileformat)}\          " fileformat
 set statusline+=\ %Y\                                          " file type
-set statusline+=%#CursorIM#                                    " colour
+set statusline+=%#WildMenu#                                    " colour
 set statusline+=\ %3l:%-2c\                                    " line + column
-set statusline+=%#Cursor#                                      " colour
+set statusline+=%#WildMenu#                                      " colour
 set statusline+=\ %3p%%\                                       " percentage
