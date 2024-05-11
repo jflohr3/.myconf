@@ -4,6 +4,38 @@
 """"""""""""""""""""""""""""""""""
 " New Stuff Tryouts -            "
 """"""""""""""""""""""""""""""""""
+"access man pages inside vim
+runtime! ftplugin/man.vim
+
+function! GetVisual()
+    try
+        let v_save = @v
+        normal! gv"vy
+        return @v
+    finally
+        let @v = v_save
+    endtry
+endfunction
+
+fun! Center()
+    let v = GetVisual()
+    "let l = getline('.')
+    let lre = '^\zs\s*\ze\S'
+    let rre = '\s*$'
+    let sp= matchstr(v,lre)
+    let sp .= matchstr(v,rre)
+    let ln=len(sp)
+    let v = substitute(v,lre,sp[:ln/2-1],'')
+    let v = substitute(v,rre,sp[ln/2:],'')
+    let ve_save = &virtualedit
+    let v_save = @v
+    let &virtualedit = 'all'
+    call setreg('v', v,visualmode())
+    normal! gvx"vP
+    let @v = v_save
+    let &virtualedit = ve_save
+endf
+
 set splitright
 
 " using vimdiff with multiple versions of file,
@@ -116,7 +148,7 @@ colorscheme dracula
 ""search highlighted              "
 set hlsearch
 ""relative line number            "
-set relativenumber
+"set relativenumber
 ""syntax highlighting             "
 syntax enable
 ""custom color scheme             "
